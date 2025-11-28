@@ -1,17 +1,11 @@
 #include <stdio.h>
-
-typedef struct 
-{
-    int ID;
-    char titulo[MAX_NOMBRE];
-    char autor[MAX_AUTOR];
-    int pub;
-    char estado[10];
-
-}Libro;
-
+#include "libros.h"
 
 
 int main (int argc, char *argv[]) {
+
+    printf("\n---Sistema de Inventario---\n");
+    Libro l1;
+
     return 0;
 }
