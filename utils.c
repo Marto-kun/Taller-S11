@@ -10,3 +10,12 @@ int existeNombre(Libro libro, char nombre[]){
     }
     return 0;
 }
+
+int existeNombre(Libro libro, int ID){
+    for(int i = 0; i < MAX_NOMBRE; i++){
+        if(libro.ID, ID == 0){
+            return 1;
+        }
+    }
+    return 0;
+}
