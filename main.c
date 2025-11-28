@@ -3,8 +3,8 @@
 typedef struct 
 {
     int ID;
-    char titulo[100];
-    char autor[50];
+    char titulo[MAX_NOMBRE];
+    char autor[MAX_AUTOR];
     int pub;
     char estado[10];
 
