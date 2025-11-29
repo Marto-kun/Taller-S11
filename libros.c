@@ -61,7 +61,6 @@ void LimpiarBuffer()
 
 /**
  * @brief Funcion para verificar numeros enteros
- *
  * @param string
  * @return int
  */
