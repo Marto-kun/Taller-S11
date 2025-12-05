@@ -21,11 +21,12 @@ typedef struct
  * @brief verifica si el nombre ingresado ya fue registrado
  * @param libro matriz de objetos de la estructura
  * @param nombre cadena ingresada a comprobar
+ * @param n cantidad de libros a registrar
  * @return 1 si el nombre existe, 0 si no existe
  */
-int existeNombre(Libro libros[], char nombre[])
+int existeNombre(Libro libros[], char nombre[], int n)
 {
-    for (int i = 0; i < MAX_NOMBRE; i++)
+    for (int i = 0; i < n; i++)
     {
         if (strcmp(libros[i].titulo, nombre) == 0)
         {
@@ -35,9 +36,16 @@ int existeNombre(Libro libros[], char nombre[])
     return 0;
 }
 
-int existeID(Libro libros[], int ID)
+/**
+ * @brief verifica si la ID ingresada ya fue registrada
+ * @param libro matriz de objetos de la estructura
+ * @param ID cadena ingresada a comprobar
+ * @param n cantidad de libros a registrar
+ * @return 1 si el nombre existe, 0 si no existe
+ */
+int existeID(Libro libros[], int ID, int n)
 {
-    for (int i = 0; i < MAX_NOMBRE; i++)
+    for (int i = 0; i < n; i++)
     {
         if (libros[i].ID == ID)
         {
@@ -105,4 +113,8 @@ int VerificacionChar(char string[])
         }
     }
     return 1; // Si la cadena son solo caracteres entonces se retorna 1
+}
+
+void ActualEstado(Libro *libros[], char string[]){
+
 }

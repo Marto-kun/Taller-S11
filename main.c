@@ -6,9 +6,11 @@
 int main(int argc, char *argv[])
 {
     int n;
+    int estado;
     char entrada[MAX_LIBROS];
     printf("\n---Sistema de Inventario---\n");
 
+    // Ingreso cantidad de libros
     int nValido = 0;
     do
     {
@@ -46,7 +48,7 @@ int main(int argc, char *argv[])
         int IdValida = 0;
         do
         {
-            printf("\nIngrese el precio de %s: ", libros[i]);
+            printf("\nIngrese la ID del libro %i: ", i + 1);
             if (fgets(entrada, 25, stdin) == NULL)
             {
                 LimpiarBuffer();
@@ -62,8 +64,15 @@ int main(int argc, char *argv[])
 
                 if (IdIngresado > 0)
                 {
-                    libros[i].ID = IdIngresado;
-                    IdValida = 1;
+                    if (existeID(libros, IdIngresado, n) == 1)
+                    {
+                        printf("\nLa ID ingresada ya existe. Por favor ingrese una nueva ID");
+                    }
+                    else
+                    {
+                        libros[i].ID = IdIngresado;
+                        IdValida = 1;
+                    }
                 }
             }
             else
@@ -94,8 +103,15 @@ int main(int argc, char *argv[])
 
             if (VerificacionChar(entrada) == 1)
             {
-                strcpy(libros[i].titulo, entrada);
-                nombreValido = 1;
+                if (existeID(libros, entrada, n) == 1)
+                {
+                    printf("\nEl titulo ingresado ya existe. Por favor ingrese un nuevo titulo");
+                }
+                else
+                {
+                    strcpy(libros[i].titulo, entrada);
+                    nombreValido = 1;
+                }
             }
             else
             {
@@ -121,20 +137,77 @@ int main(int argc, char *argv[])
                 continue;
             }
 
-            //Eliminar salto de linea
+            // Eliminar salto de linea
             entrada[strcspn(entrada, "\n")] = '\0';
 
-            if (VerificacionChar(entrada)==1)
+            if (VerificacionChar(entrada) == 1)
             {
                 strcpy(libros[i].autor, entrada);
-                autValido =1;
-            }else{
+                autValido = 1;
+            }
+            else
+            {
                 printf("\nSolo se permiten letras. Intentelo de nuevo.");
                 autValido = 0;
             }
-            
 
         } while (autValido == 0);
+    }
+
+    int estValido = 0;
+    do
+    {
+        printf("\nIngrese el estado predeterminado de los libros: ");
+        printf("\n1) Disponible");
+        printf("\n2) Prestado");
+        printf("\n>>");
+
+        if (fgets(entrada, 25, stdin) == NULL)
+        {
+            LimpiarBuffer();
+            continue;
+        }
+
+        // Eliminar el salto de línea al final de la cadena
+        entrada[strcspn(entrada, "\n")] = '\0';
+
+        if (VerificacionDigitos(entrada) == 1)
+        {
+            int estIngresado = atoi(entrada);
+
+            if (estIngresado > 0)
+            {
+                estado = estIngresado;
+                estValido = 1;
+            }
+        }
+        else
+        {
+            printf("\nSolo se permiten numeros positivos. Intentelo de nuevo.");
+        }
+
+    } while (estValido == 0);
+
+    switch (estado)
+    {
+    case 1:
+        for (int i = 0; i < MAX_LIBROS; i++)
+        {
+            strcpy(libros[i].estado, "Disponible");
+        }
+        printf("\nEstado predeterminado cambiado a 'Disponible'");
+        break;
+
+    case 2:
+        for (int i = 0; i < MAX_LIBROS; i++)
+        {
+            strcpy(libros[i].estado, "Prestado");
+        }
+        printf("\nEstado predeterminado cambiado a 'Prestado'");
+        break;
+    default:
+        printf("Opcion invalida, intentelo de nuevo.");
+        break;
     }
 
     return 0;

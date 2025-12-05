@@ -4,8 +4,8 @@
 
 
 // Declaracion de funciones
-int existeNombre(Libro libros[], char nombre[]);
-int existeID(Libro libros[], int ID);
+int existeNombre(Libro libros[], char nombre[], int n);
+int existeID(Libro libros[], int ID, int n);
 void LimpiarBuffer();
 int VerificacionDigitos(char string[]);
 int VerificacionChar(char string[]);
