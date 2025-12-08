@@ -5,6 +5,7 @@
 #define MAX_LIBROS 10
 #define MAX_NOMBRE 100
 #define MAX_AUTOR 50
+#define MAX_ESTADO 10
 // #include "libros.h"
 
 typedef struct
@@ -13,7 +14,7 @@ typedef struct
     char titulo[MAX_NOMBRE];
     char autor[MAX_AUTOR];
     int pub;
-    char estado[10];
+    char estado[MAX_ESTADO];
 } Libro;
 
 /**
@@ -114,17 +115,6 @@ int VerificacionChar(char string[])
     return 1; // Si la cadena son solo caracteres entonces se retorna 1
 }
 
-/**
- * @brief Funcion para actualizar el estado de un libro
- * 
- * @param libros puntero al vector de libros
- * @param string estado deseado
- * @param index indice del libro a modificar
- */
-void ActualEstado(Libro *libros[], char string[], int index)
-{
-    strcpy(*libros[index]->estado, string);
-}
 
 /**
  * @brief Funcion para buscar libros por ID

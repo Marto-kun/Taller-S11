@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
     } while (nValido == 0);
 
     Libro libros[n];
+    Libro *ptrLibros;
 
     // Ingreso de ID's de libros
     for (int i = 0; i < n; i++)
@@ -159,7 +160,7 @@ int main(int argc, char *argv[])
         int anioValido = 0;
         do
         {
-            printf("\nIngrese el anio de publicacion del libro %i: ", i + 1);
+            printf("\nIngrese el anio de publicacion del libro %s: ", libros[i].titulo);
             if (fgets(entrada, 25, stdin) == NULL)
             {
                 LimpiarBuffer();
@@ -188,6 +189,7 @@ int main(int argc, char *argv[])
         } while (anioValido == 0);
     }
 
+    // Estado predeterminado de libros
     int estValido = 0;
     do
     {
@@ -248,245 +250,255 @@ int main(int argc, char *argv[])
     }
 
     //--- MENU PRINCIPAL ---
-
-    int opcValida = 0;
     do
     {
-        printf("\nIngrese la opcion deseada: ");
-        printf("\n1) Mostrar Tabla de Informacion");
-        printf("\n2) Buscar libro por ID o Titulo");
-        printf("\n3) Actualizar estado de un libro");
-        printf("\n4) Eliminar libro");
-        printf("\n5) Salir del programa");
-        printf("\n>>");
-
-        if (fgets(entrada, 25, stdin) == NULL)
+        int opcValida = 0;
+        do
         {
-            LimpiarBuffer();
-            continue;
-        }
+            printf("\nIngrese la opcion deseada: ");
+            printf("\n1) Mostrar Tabla de Informacion");
+            printf("\n2) Buscar libro por ID o Titulo");
+            printf("\n3) Actualizar estado de un libro");
+            printf("\n4) Eliminar libro");
+            printf("\n5) Salir del programa");
+            printf("\n>>");
 
-        // Eliminar el salto de línea al final de la cadena
-        entrada[strcspn(entrada, "\n")] = '\0';
-
-        if (VerificacionDigitos(entrada) == 1)
-        {
-            int opcIngresada = atoi(entrada);
-
-            if (opcIngresada > 0)
+            if (fgets(entrada, 25, stdin) == NULL)
             {
-                opc = opcIngresada;
-                opcValida = 1;
+                LimpiarBuffer();
+                continue;
             }
-        }
-        else
-        {
-            printf("\nSolo se permiten numeros positivos. Intentelo de nuevo.");
-        }
 
-    } while (opcValida == 0);
+            // Eliminar el salto de línea al final de la cadena
+            entrada[strcspn(entrada, "\n")] = '\0';
 
-    if (opcValida == 1)
-    {
-        switch (opc)
-        {
-        case 1: // Mostrar informacion en formato tabla
-            /* code */
-            break;
-
-        case 2:
-            int opc2Valida = 0;
-            do
+            if (VerificacionDigitos(entrada) == 1)
             {
-                printf("\nIngrese su método de búsqueda: ");
-                printf("\n1) ID");
-                printf("\n2) Titulo");
-                printf("\n>>");
+                int opcIngresada = atoi(entrada);
 
-                if (fgets(entrada, 25, stdin) == NULL)
+                if (opcIngresada > 0)
                 {
-                    LimpiarBuffer();
-                    continue;
+                    opc = opcIngresada;
+                    opcValida = 1;
                 }
+            }
+            else
+            {
+                printf("\nSolo se permiten numeros positivos. Intentelo de nuevo.");
+            }
 
-                // Eliminar el salto de línea al final de la cadena
-                entrada[strcspn(entrada, "\n")] = '\0';
+        } while (opcValida == 0);
 
-                if (VerificacionDigitos(entrada) == 1)
+        if (opcValida == 1)
+        {
+            switch (opc)
+            {
+            case 1: // Mostrar informacion en formato tabla
+                /* code */
+                break;
+
+            case 2:
+                int opc2Valida = 0;
+                do
                 {
-                    int opc2Ingresada = atoi(entrada);
+                    printf("\nIngrese su metodo de busqueda: ");
+                    printf("\n1) ID");
+                    printf("\n2) Titulo");
+                    printf("\n>>");
 
-                    if (opc2Ingresada > 0)
+                    if (fgets(entrada, 25, stdin) == NULL)
                     {
-                        opcBus = opc2Ingresada;
-                        opc2Valida = 1;
+                        LimpiarBuffer();
+                        continue;
                     }
-                }
-                else
-                {
-                    printf("\nSolo se permiten numeros positivos. Intentelo de nuevo.");
-                }
 
-            } while (opc2Valida == 0);
+                    // Eliminar el salto de línea al final de la cadena
+                    entrada[strcspn(entrada, "\n")] = '\0';
 
-            if (opc2Valida == 1)
-            {
-                switch (opcBus)
-                {
-                case 1:
-                    int IdValida = 0;
-                    do
+                    if (VerificacionDigitos(entrada) == 1)
                     {
-                        printf("\nIngrese la ID que desea buscar: ");
-                        if (fgets(entrada, 25, stdin) == NULL)
+                        int opc2Ingresada = atoi(entrada);
+
+                        if (opc2Ingresada > 0)
                         {
-                            LimpiarBuffer();
-                            continue;
+                            opcBus = opc2Ingresada;
+                            opc2Valida = 1;
                         }
-
-                        // Eliminar el salto de línea al final de la cadena
-                        entrada[strcspn(entrada, "\n")] = '\0';
-
-                        if (VerificacionDigitos(entrada) == 1)
-                        {
-                            int IdIngresado = atoi(entrada);
-
-                            if (IdIngresado > 0)
-                            {
-                                if (existeID(libros, IdIngresado, n) == 0)
-                                {
-                                    printf("\nLa ID ingresada NO existe. Por favor ingrese una nueva ID");
-                                }
-                                else
-                                {
-                                    index = buscarProductoID(libros, IdIngresado);
-                                    printf("\nId del libro: %i", libros[index].ID);
-                                    printf("\nTitulo del libro: %s", libros[index].titulo);
-                                    printf("\nAnio de publicacion del libro: %i", libros[index].pub);
-                                    printf("\nAutor del libro: %s", libros[index].autor);
-                                    printf("\nEstado del libro: %i", libros[index].estado);
-                                    IdValida = 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            printf("\nSolo se permiten numeros positivos. Intentelo de nuevo.");
-                        }
-
-                    } while (IdValida == 0);
-                    break;
-                case 2:
-                    int nombreValido = 0;
-                    do
+                    }
+                    else
                     {
-                        printf("\nIngresar el titulo que desea buscar: ");
-                        if (fgets(entrada, MAX_NOMBRE, stdin) == NULL)
-                        {
-                            LimpiarBuffer();
-                            nombreValido = 0;
-                            continue;
-                        }
+                        printf("\nSolo se permiten numeros positivos. Intentelo de nuevo.");
+                    }
 
-                        // Eliminar el salto de línea al final de la cadena
-                        entrada[strcspn(entrada, "\n")] = '\0';
+                } while (opc2Valida == 0);
 
-                        if (VerificacionChar(entrada) == 1)
-                        {
-                            if (existeNombre(libros, entrada, n) == 0)
-                            {
-                                printf("\nEl titulo ingresado NO existe. Por favor ingrese un nuevo titulo");
-                            }
-                            else
-                            {
-                                index = buscarProductoID(libros, entrada);
-                                printf("\nId del libro: %i", libros[index].ID);
-                                printf("\nTitulo del libro: %s", libros[index].titulo);
-                                printf("\nAnio de publicacion del libro: %i", libros[index].pub);
-                                printf("\nAutor del libro: %s", libros[index].autor);
-                                printf("\nEstado del libro: %i", libros[index].estado);
-                                nombreValido = 1;
-                            }
-                        }
-                        else
-                        {
-                            printf("\nSolo se permiten letras. Intentelo de nuevo.");
-                            nombreValido = 0;
-                        }
-
-                    } while (nombreValido == 0);
-                    break;
-                default:
-                    printf("Opcion invalida, intentelo de nuevo.");
-                    break;
-                }
-            }
-        case 3:
-            int IdValida = 0;
-            do
-            {
-                printf("\nIngrese la ID del libro que desea actualizar: ");
-                if (fgets(entrada, 25, stdin) == NULL)
+                if (opc2Valida == 1)
                 {
-                    LimpiarBuffer();
-                    continue;
-                }
-
-                // Eliminar el salto de línea al final de la cadena
-                entrada[strcspn(entrada, "\n")] = '\0';
-
-                if (VerificacionDigitos(entrada) == 1)
-                {
-                    int IdIngresado = atoi(entrada);
-
-                    if (IdIngresado > 0)
+                    switch (opcBus)
                     {
-                        if (existeID(libros, IdIngresado, n) == 0)
+                    case 1:
+                        int IdValida = 0;
+                        do
                         {
-                            printf("\nLa ID ingresada NO existe. Por favor ingrese una nueva ID");
-                        }
-                        else
-                        {
-                            char str[10];
-
-                            printf("\nIngrese el nuevo estado: ");
-                            if (fgets(str, 25, stdin) == NULL)
+                            printf("\nIngrese la ID que desea buscar: ");
+                            if (fgets(entrada, 25, stdin) == NULL)
                             {
                                 LimpiarBuffer();
                                 continue;
                             }
 
                             // Eliminar el salto de línea al final de la cadena
-                            str[strcspn(str, "\n")] = '\0';
+                            entrada[strcspn(entrada, "\n")] = '\0';
 
                             if (VerificacionDigitos(entrada) == 1)
                             {
-                                if (strcmp(str, "Disponible") || strcmp(str, "Prestado") == 0)
+                                int IdIngresado = atoi(entrada);
+
+                                if (IdIngresado > 0)
                                 {
-                                    index = buscarProductoID(libros, IdIngresado);
-                                    ActualEstado(libros, str, index);
-                                    IdValida = 1;
+                                    if (existeID(libros, IdIngresado, n) == 0)
+                                    {
+                                        printf("\nLa ID ingresada NO existe. Por favor ingrese una nueva ID");
+                                    }
+                                    else
+                                    {
+                                        index = buscarProductoID(libros, IdIngresado);
+                                        printf("\nId del libro: %i", libros[index].ID);
+                                        printf("\nTitulo del libro: %s", libros[index].titulo);
+                                        printf("\nAnio de publicacion del libro: %i", libros[index].pub);
+                                        printf("\nAutor del libro: %s", libros[index].autor);
+                                        printf("\nEstado del libro: %s", libros[index].estado);
+                                        IdValida = 1;
+                                    }
                                 }
                             }
                             else
                             {
-                                printf("\nSolo puede ingresar estado 'Disponible' o 'Prestado'. Intentelo de nuevo");
+                                printf("\nSolo se permiten numeros positivos. Intentelo de nuevo.");
+                            }
+
+                        } while (IdValida == 0);
+                        break;
+                    case 2:
+                        int nombreValido = 0;
+                        do
+                        {
+                            printf("\nIngresar el titulo que desea buscar: ");
+                            if (fgets(entrada, MAX_NOMBRE, stdin) == NULL)
+                            {
+                                LimpiarBuffer();
+                                nombreValido = 0;
+                                continue;
+                            }
+
+                            // Eliminar el salto de línea al final de la cadena
+                            entrada[strcspn(entrada, "\n")] = '\0';
+
+                            if (VerificacionChar(entrada) == 1)
+                            {
+                                if (existeNombre(libros, entrada, n) == 0)
+                                {
+                                    printf("\nEl titulo ingresado NO existe. Por favor ingrese un nuevo titulo");
+                                }
+                                else
+                                {
+                                    index = buscarProducto(libros, entrada);
+                                    printf("\nId del libro: %i", libros[index].ID);
+                                    printf("\nTitulo del libro: %s", libros[index].titulo);
+                                    printf("\nAnio de publicacion del libro: %i", libros[index].pub);
+                                    printf("\nAutor del libro: %s", libros[index].autor);
+                                    printf("\nEstado del libro: %s", libros[index].estado);
+                                    nombreValido = 1;
+                                }
+                            }
+                            else
+                            {
+                                printf("\nSolo se permiten letras. Intentelo de nuevo.");
+                                nombreValido = 0;
+                            }
+
+                        } while (nombreValido == 0);
+                        break;
+                    default:
+                        printf("Opcion invalida, intentelo de nuevo.");
+                        break;
+                    }
+                }
+                break;
+            case 3:
+                int IdValida = 0;
+                do
+                {
+                    printf("\nIngrese la ID del libro que desea actualizar: ");
+                    if (fgets(entrada, 25, stdin) == NULL)
+                    {
+                        LimpiarBuffer();
+                        continue;
+                    }
+
+                    // Eliminar el salto de línea al final de la cadena
+                    entrada[strcspn(entrada, "\n")] = '\0';
+
+                    if (VerificacionDigitos(entrada) == 1)
+                    {
+                        int IdIngresado = atoi(entrada);
+
+                        if (IdIngresado > 0)
+                        {
+                            if (existeID(libros, IdIngresado, n) == 0)
+                            {
+                                printf("\nLa ID ingresada NO existe. Por favor ingrese una nueva ID");
+                            }
+                            else
+                            {
+                                char str[10];
+
+                                printf("\nIngrese el nuevo estado: ");
+                                if (fgets(str, 25, stdin) == NULL)
+                                {
+                                    LimpiarBuffer();
+                                    continue;
+                                }
+
+                                // Eliminar el salto de línea al final de la cadena
+                                str[strcspn(str, "\n")] = '\0';
+
+                                if (VerificacionChar(str) == 1)
+                                {
+                                    if (strcmp(str, "Disponible") || strcmp(str, "Prestado") == 0)
+                                    {
+                                        index = buscarProductoID(libros, IdIngresado);
+                                        strcpy(libros[index].estado, str);
+                                        printf("\nNuevo estado del libro %s es: %s",libros[index].titulo, libros[index].estado);
+                                        IdValida = 1;
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    printf("\nSolo puede ingresar estado 'Disponible' o 'Prestado'. Intentelo de nuevo");
+                                }
                             }
                         }
                     }
-                }
-                else
-                {
-                    printf("\nSolo se permiten numeros positivos. Intentelo de nuevo.");
-                }
-            } while (IdValida == 0);
-            break;
+                    else
+                    {
+                        printf("\nSolo se permiten numeros positivos. Intentelo de nuevo.");
+                    }
+                } while (IdValida == 0);
+                break;
 
-        case 4: // Eliminar el libro
-        default:
-            break;
+            case 4: // Eliminar el libro
+                break;
+            case 5:
+                printf("Gracias por usar nuestro programa. Saliendo...");
+                return 0;
+                break;
+
+            default:
+                break;
+            }
         }
-    }
-
+    } while (opc != 5);
     return 0;
 }
