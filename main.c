@@ -496,7 +496,7 @@ int main(int argc, char *argv[])
                 break;
 
             default:
-                printf("Opcion invalida. Por favor intentelo de nuevo.");
+                printf("Opcion NO valida. Por favor intentelo de nuevo.");
                 break;
             }
         }
