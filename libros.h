@@ -11,4 +11,6 @@ int VerificacionDigitos(char string[]);
 int VerificacionChar(char string[]);
 int buscarProductoID(Libro libros[], int entrada);
 int buscarProducto(Libro libros[], char nombreBuscado[]);
+void MostrarTabla(Libro libros[], int n);
+int EliminarLibro(Libro libros[], int *n, int ID);
 #endif
