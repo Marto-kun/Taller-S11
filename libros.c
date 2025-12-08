@@ -163,3 +163,58 @@ int buscarProducto(Libro libros[], char nombreBuscado[])
     }
     return -1;
 }
+
+/**
+ * @brief Muestra la lista completa de libros en formato de tabla.
+ * @param libros vector de la estructura Libro
+ * @param n cantidad actual de libros registrados
+ */
+void MostrarTabla(Libro libros[], int n)
+{
+    if (n == 0)
+    {
+        printf("\nLa biblioteca esta vacia. No hay libros registrados.\n");
+        return;
+    }
+
+    printf("\n\n+-----+---------------------------------------------------------------------------------------------------+---------------------------------------------------+------+------------+\n");
+    printf("| ID  | TITULO                                                                                              | AUTOR                                             | ANIO | ESTADO     |\n");
+    printf("+-----+---------------------------------------------------------------------------------------------------+---------------------------------------------------+------+------------+\n");
+    
+    // Iterar solo sobre los 'n' libros registrados
+    for (int i = 0; i < n; i++)
+    {
+        printf("| %-3d | %-99.99s | %-49.49s | %-4d | %-10s |\n",
+               libros[i].ID, libros[i].titulo, libros[i].autor, libros[i].pub, libros[i].estado);
+    }
+    printf("+-----+---------------------------------------------------------------------------------------------------+---------------------------------------------------+------+------------+\n\n");
+}
+
+/**
+ * @brief Elimina un libro del vector moviendo los elementos restantes
+ * y actualizando la cantidad total de libros.
+ * @param libros vector de la estructura Libro
+ * @param n puntero a la cantidad actual de libros registrados
+ * @param ID ID del libro a eliminar
+ * @return 1 si el libro fue eliminado, 0 si no se encontro la ID
+ */
+int EliminarLibro(Libro libros[], int *n, int ID)
+{
+    int index = buscarProductoID(libros, ID); // Reutiliza la función de búsqueda por ID
+
+    if (index == -1)
+    {
+        return 0; // ID no encontrada
+    }
+
+    // Mover los elementos posteriores una posición hacia adelante
+    for (int i = index; i < (*n) - 1; i++)
+    {
+        libros[i] = libros[i + 1];
+    }
+
+    // Decrementar la cantidad de libros
+    (*n)--;
+
+    return 1; // Eliminación exitosa
+}
