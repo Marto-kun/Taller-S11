@@ -294,7 +294,7 @@ int main(int argc, char *argv[])
             switch (opc)
             {
             case 1: // Mostrar informacion en formato tabla
-                /* code */
+                MostrarTabla(libros, n);
                 break;
 
             case 2:
@@ -469,7 +469,7 @@ int main(int argc, char *argv[])
                                     {
                                         index = buscarProductoID(libros, IdIngresado);
                                         strcpy(libros[index].estado, str);
-                                        printf("\nNuevo estado del libro %s es: %s",libros[index].titulo, libros[index].estado);
+                                        printf("\nNuevo estado del libro %s es: %s", libros[index].titulo, libros[index].estado);
                                         IdValida = 1;
                                         break;
                                     }
@@ -489,6 +489,52 @@ int main(int argc, char *argv[])
                 break;
 
             case 4: // Eliminar el libro
+
+                IdValida = 0;
+                if (n == 0)
+                {
+                    printf("\nNo hay libros para eliminar.\n");
+                    break;
+                }
+                do
+                {
+                    printf("\nIngrese la ID del libro que desea eliminar: ");
+                    if (fgets(entrada, 25, stdin) == NULL)
+                    {
+                        LimpiarBuffer();
+                        continue;
+                    }
+
+                    entrada[strcspn(entrada, "\n")] = '\0';
+
+                    if (VerificacionDigitos(entrada) == 1)
+                    {
+                        int IdIngresado = atoi(entrada);
+
+                        if (IdIngresado > 0)
+                        {
+                            if (EliminarLibro(libros, &n, IdIngresado) == 1)
+                            {
+                                printf("\nLibro con ID %d eliminado exitosamente. Quedan %d libros.\n", IdIngresado, n);
+                                IdValida = 1;
+                            }
+                            else
+                            {
+                                printf("\nLa ID ingresada NO existe. Intentelo de nuevo.\n");
+                            }
+                        }
+                        else
+                        {
+                            printf("\nLa ID debe ser un numero positivo.\n");
+                        }
+                    }
+                    else
+                    {
+                        printf("\nEntrada invalida. Solo se permiten numeros.\n");
+                    }
+                } while (IdValida == 0);
+                break;
+
                 break;
             case 5:
                 printf("Gracias por usar nuestro programa. Saliendo...");
