@@ -9,5 +9,6 @@ int existeID(Libro libros[], int ID, int n);
 void LimpiarBuffer();
 int VerificacionDigitos(char string[]);
 int VerificacionChar(char string[]);
-
+int buscarProductoID(Libro libros[], int entrada);
+int buscarProducto(Libro libros[], char nombreBuscado[]);
 #endif

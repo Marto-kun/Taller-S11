@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <ctype.h>
 
-
 #define MAX_LIBROS 10
 #define MAX_NOMBRE 100
 #define MAX_AUTOR 50
@@ -115,6 +114,52 @@ int VerificacionChar(char string[])
     return 1; // Si la cadena son solo caracteres entonces se retorna 1
 }
 
-void ActualEstado(Libro *libros[], char string[]){
+/**
+ * @brief Funcion para actualizar el estado de un libro
+ * 
+ * @param libros puntero al vector de libros
+ * @param string estado deseado
+ * @param index indice del libro a modificar
+ */
+void ActualEstado(Libro *libros[], char string[], int index)
+{
+    strcpy(*libros[index]->estado, string);
+}
 
+/**
+ * @brief Funcion para buscar libros por ID
+ *
+ * @param libros vector de la estructura libros
+ * @param entrada busqueda del usuario
+ * @return int la posicion en el vector del libro buscado
+ */
+int buscarProductoID(Libro libros[], int entrada)
+{
+    for (int i = 0; i < MAX_LIBROS; i++)
+    {
+        if (libros[i].ID == entrada)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+/**
+ * @brief Funcion para buscar libros por TITULO
+ *
+ * @param libros vector de la estructura libros
+ * @param nombreBuscado Busqueda del usuario
+ * @return int la posicion en el vector del libro buscado
+ */
+int buscarProducto(Libro libros[], char nombreBuscado[])
+{
+    for (int i = 0; i < MAX_LIBROS; i++)
+    {
+        if (strcmp(libros[i].titulo, nombreBuscado) == 0)
+        {
+            return i;
+        }
+    }
+    return -1;
 }
