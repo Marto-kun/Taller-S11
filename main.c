@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
             // Eliminar el salto de línea al final de la cadena
             entrada[strcspn(entrada, "\n")] = '\0';
 
-            if (VerificacionChar(entrada) == 1)
+            if (VerificacionCharEspacios(entrada) == 1)
             {
                 if (existeNombre(libros, entrada, n) == 1)
                 {
@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
             // Eliminar salto de linea
             entrada[strcspn(entrada, "\n")] = '\0';
 
-            if (VerificacionChar(entrada) == 1)
+            if (VerificacionCharEspacios(entrada) == 1)
             {
                 strcpy(libros[i].autor, entrada);
                 autValido = 1;
@@ -394,7 +394,7 @@ int main(int argc, char *argv[])
                             // Eliminar el salto de línea al final de la cadena
                             entrada[strcspn(entrada, "\n")] = '\0';
 
-                            if (VerificacionChar(entrada) == 1)
+                            if (VerificacionCharEspacios(entrada) == 1)
                             {
                                 if (existeNombre(libros, entrada, n) == 0)
                                 {
